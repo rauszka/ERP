@@ -1,4 +1,3 @@
-from controller.crm_controller import LABELS
 
 
 def print_menu(title, list_options):
@@ -32,7 +31,6 @@ def print_message(message):
     print(message)
     
 
-
 def print_general_results(result, label):
     """Prints out any type of non-tabular data.
     It should print numbers (like "@label: @value", floats with 2 digits after the decimal),
@@ -44,7 +42,6 @@ def print_general_results(result, label):
     for i in range(len(result)):
         print(f'{result[i]}')
     print("\n")
-
 
 
 # /--------------------------------\
@@ -66,11 +63,11 @@ def print_table(table):
     table_len = []
     header = table[0]
     for i in range(len(header)):
-       length = 0
-       for j in range(len(table)):
-           if len(table[j][i]) > length:
-               length = len(table[j][i])
-       table_len.append(length)
+        length = 0
+        for j in range(len(table)):
+            if len(table[j][i]) > length:
+                length = len(table[j][i])
+        table_len.append(length)
 
     print(f' /{"-" * (sum(table_len) + (len(splitter) * (len(table_len))) - 1)}\\')
     for i in range(len(header)):   
@@ -85,6 +82,7 @@ def print_table(table):
             print(f' {splitter_line}{splitter_forline[:-1]}')
         print(f'{lines}{splitter}')
     print(f' \\{"-" * (sum(table_len) + (len(splitter) * (len(table_len))) - 1)}/')
+    print("\n")
 
 
 def get_input(label):
@@ -93,9 +91,8 @@ def get_input(label):
     Args:
         label: str - the label before the user prompt
     """
-    mode = input(label )
+    mode = input(label)
     return mode
-    
 
 
 def get_inputs(labels):
@@ -104,11 +101,11 @@ def get_inputs(labels):
     Args:
         labels: list - the list of the labels to be displayed before each prompt
     """
-    list = []
+    list1 = []
     for i in labels:
         x = input(f'{i}: ')
-        list.append(x)
-    return list
+        list1.append(x)
+    return list1
 
 
 def print_error_message(message):

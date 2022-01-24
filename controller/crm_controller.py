@@ -1,12 +1,13 @@
 from model.crm import crm
 from view import terminal as view
 
-LABELS =  ["ID", "Name", "Email", "Subscribed"]
+LABELS = ["ID", "Name", "Email", "Subscribed"]
 
 
 def add_customer():
     table = view.get_inputs(LABELS[1:])
     crm.add_customers(table)
+
 
 def list_customers():
     data = crm.list_customers()

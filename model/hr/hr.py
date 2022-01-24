@@ -8,7 +8,6 @@ Data table structure:
     - clearance level (int): from 0 (lowest) to 7 (highest)
 """
 
-from controller.sales_controller import get_biggest_revenue_transaction
 from model import data_manager, util
 
 
@@ -36,32 +35,32 @@ def list_employees():
 def check_id(table):
     table = ''.join(table)
     data = data_manager.read_table_from_file(DATAFILE)
-    id = []
+    identity = []
     for line in data:
-        id.append(line[0])
-    if table in id:
+        identity.append(line[0])
+    if table in identity:
         return True
     else:
         return False
 
 
 def update_employee(table, data):
-    list = data_manager.read_table_from_file(DATAFILE, separator=';')
+    lista = data_manager.read_table_from_file(DATAFILE, separator=';')
     table = ''.join(table)
-    for dicts in list:
+    for dicts in lista:
         if dicts[0] == table:
             dicts[1] = data[0]
             dicts[2] = data[1]
             dicts[3] = data[2]
             dicts[4] = data[3]
-    data_manager.write_table_to_file(DATAFILE, list, separator=';')
+    data_manager.write_table_to_file(DATAFILE, lista, separator=';')
 
 
 def delete_employee(table):
-    list = data_manager.read_table_from_file(DATAFILE, separator=';')
+    lista = data_manager.read_table_from_file(DATAFILE, separator=';')
     table = ''.join(table)
     temp_list = []
-    for dicts in list:
+    for dicts in lista:
         if dicts[0] != table:
             temp_list.append(dicts)
         else:
@@ -71,7 +70,7 @@ def delete_employee(table):
 
 def convert_date(date):
     date = ''.join(date).replace('-', '')
-    year =  (int(date[:4]) - 1900) * 365
+    year = (int(date[:4]) - 1900) * 365
     day = int(date[-2:])
     months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     sum_months = sum(months[:int(date[4:6])])
@@ -83,57 +82,56 @@ def convert_date(date):
             continue
         if i % 4 == 0: 
             leap_year += 1
-    number = year + sum_months + day -30 + leap_year
+    number = year + sum_months + day-30 + leap_year
     return number
 
 
 def get_oldest_youngest():
-    list = data_manager.read_table_from_file(DATAFILE, separator=';')
-    for i in list:
+    lista = data_manager.read_table_from_file(DATAFILE, separator=';')
+    for i in lista:
         i[2] = convert_date(i[2])
-    oldest = sorted(list,key=lambda y: y[2])
-    youngest = sorted(list, key=lambda y: y[2])
+    oldest = sorted(lista, key=lambda y: y[2])
+    youngest = sorted(lista, key=lambda y: y[2])
     return oldest[0][1], youngest[-1][1]
 
 
 def get_average_age(today):
-    list = data_manager.read_table_from_file(DATAFILE, separator=';')
+    lista = data_manager.read_table_from_file(DATAFILE, separator=';')
     ages = []
-    for i in list:
+    for i in lista:
         ages.append(int((convert_date(today) - convert_date(i[2]))/365))
         
-    return (int(sum(ages) / len(ages)))
+    return int(sum(ages)/len(ages))
 
 
 def has_birthday_within_two_weeks(today):
     replace_today = ''.join(today).replace('-', '')
-    today_digit = convert_date(today)
-    list = data_manager.read_table_from_file(DATAFILE, separator=';')
+    lista = data_manager.read_table_from_file(DATAFILE, separator=';')
     replacement = replace_today[:4]
     employees = []
-    for i in list:
+    for i in lista:
         i[2] = i[2].replace(i[2][0:4], replacement)
-    for i in list:
+    for i in lista:
         if 0 <= convert_date(i[2]) - convert_date(today) <= 14 or convert_date(today) - (convert_date(i[2])) >= 351:
             employees.append(i[1])
     return employees
 
 
 def clearance(number):
-    list = data_manager.read_table_from_file(DATAFILE, separator=';')
+    lista = data_manager.read_table_from_file(DATAFILE, separator=';')
     number = "".join(number)
     counter = 0
-    for i in list:
+    for i in lista:
         if int(i[4]) >= int(number):
             counter += 1
     return counter
 
 
 def count_employees_per_department():
-    list = data_manager.read_table_from_file(DATAFILE, separator=';')
+    lista = data_manager.read_table_from_file(DATAFILE, separator=';')
     departments = []
     numbers = []
-    for i in list:
+    for i in lista:
         departments.append(i[3])
     for i in sorted(set(departments)):
         x = departments.count(i)
@@ -141,6 +139,7 @@ def count_employees_per_department():
     keys = sorted(set(departments))
     dicts = dict(zip(keys, numbers))
     return dicts
+
 
 def get_random_quote():
     quote = util.generate_quote()

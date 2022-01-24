@@ -13,7 +13,7 @@ def add_transaction():
 
 def list_transactions():
     data = sales.list_transactions()
-    data.insert(0,LABELS)
+    data.insert(0, LABELS)
     view.print_table(data)
     
 
@@ -21,7 +21,7 @@ def update_transaction():
     table = view.get_inputs([LABELS[0]])
     if sales.check_id(table):
         data = view.get_inputs(LABELS[1:])
-        sales.update_transaction(table,data)
+        sales.update_transaction(table, data)
     else:
         view.print_message("The ID doesn't exist.")
 
@@ -48,7 +48,7 @@ def count_transactions_between():
     start, end = view.get_inputs(BETWEEN[0:])
     start1 = sales.convert_date(start)
     end1 = sales.convert_date(end)
-    result =sales.number_of_transactions_between(start1,end1)
+    result = sales.number_of_transactions_between(start1, end1)
     view.print_general_results([result], f'Transactions between {start} and {end}')
     
 

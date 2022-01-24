@@ -14,12 +14,12 @@ def generate_id(number_of_small_letters=4,
     for i in range(number_of_capital_letters):
         name.append(random.choice(string.ascii_uppercase))
     for i in range(number_of_digits):
-        name.append(str(random.randint(0,9)))
+        name.append(str(random.randint(0, 9)))
     for i in range(number_of_special_chars):
         name.append(random.choice(allowed_special_chars))
     
-    id = random.sample(name, len(name))
-    return ''.join(id)
+    identity = random.sample(name, len(name))
+    return ''.join(identity)
 
 
 def generate_quote():

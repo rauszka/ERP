@@ -1,7 +1,7 @@
 from model.hr import hr
 from view import terminal as view
 
-LABELS =  ["ID", "Name", "Date of birth", "Department", "Clearance"]
+LABELS = ["ID", "Name", "Date of birth", "Department", "Clearance"]
 
 
 def add_employee():
@@ -11,7 +11,7 @@ def add_employee():
     
 def list_employees():
     data = hr.list_employees()
-    data.insert(0,LABELS)
+    data.insert(0, LABELS)
     view.print_table(data)
 
 
@@ -33,7 +33,7 @@ def delete_employee():
     
 
 def get_oldest_and_youngest():
-    oldest,youngest = hr.get_oldest_youngest()
+    oldest, youngest = hr.get_oldest_youngest()
     view.print_message(f"The oldest member is {oldest} and the youngest member is {youngest} \n")
     
 

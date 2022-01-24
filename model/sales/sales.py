@@ -35,32 +35,32 @@ def list_transactions():
 def check_id(table):
     table = ''.join(table)
     data = data_manager.read_table_from_file(DATAFILE)
-    id = []
+    identity = []
     for line in data:
-        id.append(line[0])
-    if table in id:
+        identity.append(line[0])
+    if table in identity:
         return True
     else:
         return False
 
 
 def update_transaction(table, data):
-    list = data_manager.read_table_from_file(DATAFILE, separator=';')
+    lista = data_manager.read_table_from_file(DATAFILE, separator=';')
     table = ''.join(table)
-    for dicts in list:
+    for dicts in lista:
         if dicts[0] == table:
             dicts[1] = data[0]
             dicts[2] = data[1]
             dicts[3] = data[2]
             dicts[4] = data[3]
-    data_manager.write_table_to_file(DATAFILE, list, separator=';')
+    data_manager.write_table_to_file(DATAFILE, lista, separator=';')
 
 
 def delete_transaction(table):
-    list = data_manager.read_table_from_file(DATAFILE, separator=';')
+    lista = data_manager.read_table_from_file(DATAFILE, separator=';')
     table = ''.join(table)
     temp_list = []
-    for dicts in list:
+    for dicts in lista:
         if dicts[0] != table:
             temp_list.append(dicts)
         else:
@@ -69,35 +69,34 @@ def delete_transaction(table):
 
 
 def get_biggest_revenue_transaction():
-    list = data_manager.read_table_from_file(DATAFILE, separator=';')
+    lista = data_manager.read_table_from_file(DATAFILE, separator=';')
     biggest = []
     transaction = []
-    for i in list:
+    for i in lista:
         biggest.append(float(i[3]))
-    for i in list:
+    for i in lista:
         if max(biggest) == float(i[3]):
             transaction.append(i)
     return transaction
 
 
 def get_biggest_revenue_product():
-    list = data_manager.read_table_from_file(DATAFILE, separator=';')
+    lista = data_manager.read_table_from_file(DATAFILE, separator=';')
     revenues = {}
-    for i in list:
+    for i in lista:
         key = i[1]
-        value = i[3]
         if key in revenues:
             revenues[key] += float(i[3])
         else:
             revenues[key] = float(i[3])
-    biggest = sorted(revenues.items(), key=lambda v: v[1], reverse = True)
+    biggest = sorted(revenues.items(), key=lambda v: v[1], reverse=True)
 
     return biggest[0][0]
 
 
 def convert_date(date):
     date = ''.join(date).replace('-', '')
-    year =  (int(date[:4]) - 1900) * 365
+    year = (int(date[:4]) - 1900) * 365
     day = int(date[-2:])
     months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
     sum_months = sum(months[:int(date[4:6])])
@@ -109,24 +108,24 @@ def convert_date(date):
             continue
         if i % 4 == 0: 
             leap_year += 1
-    number = year + sum_months + day -30 + leap_year
+    number = year + sum_months + day-30 + leap_year
     return number
 
 
-def number_of_transactions_between(start,end):
-    list = data_manager.read_table_from_file(DATAFILE, separator=';')
+def number_of_transactions_between(start, end):
+    lista = data_manager.read_table_from_file(DATAFILE, separator=';')
     number_of_days = 0
-    for i in list:
-        if convert_date(i[4]) >= start and convert_date(i[4]) <= end:
+    for i in lista:
+        if end >= convert_date(i[4]) >= start:
             number_of_days += 1
     return number_of_days
 
 
-def sum_of_transactions_between(start,end):
-    list = data_manager.read_table_from_file(DATAFILE, separator=';')
+def sum_of_transactions_between(start, end):
+    lista = data_manager.read_table_from_file(DATAFILE, separator=';')
     sum_of_transactions = 0
-    for i in list:
-        if convert_date(i[4]) >= start and convert_date(i[4]) <= end:
+    for i in lista:
+        if end >= convert_date(i[4]) >= start:
             sum_of_transactions += float(i[3])
     return sum_of_transactions
     
