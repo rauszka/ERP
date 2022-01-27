@@ -1,13 +1,15 @@
+from model.data_manager import read_table_from_file
 from model.sales import sales
 from view import terminal as view
+import alma
 
 
 BETWEEN = ["Start", "End"]
-LABELS = ["ID", "Distributor", "Title", "Revenue", "Premier"]
+LABELS = ["ID", "Name", "Category", "Weight", "Date of birth"]
 
 
 def add_transaction():
-    table = view.get_inputs(LABELS[LABELS.index('Distributor'):])
+    table = view.get_inputs(LABELS[LABELS.index('Name'):])
     sales.add_transactions(table)
     
 
@@ -36,12 +38,12 @@ def delete_transaction():
 
 def get_biggest_revenue_transaction():
     data = sales.get_biggest_revenue_transaction()
-    view.print_general_results(data, 'The movie which generated the biggest transaction')
+    view.print_general_results(data, 'The heaviest contestant')
 
 
 def get_biggest_revenue_product():
     data = sales.get_biggest_revenue_product()
-    view.print_general_results([data], 'The movie which generated the biggest revenue')
+    view.print_general_results([data], 'The heaviest contestant')
     
 
 def count_transactions_between():
@@ -49,15 +51,18 @@ def count_transactions_between():
     start1 = sales.convert_date(start)
     end1 = sales.convert_date(end)
     result = sales.number_of_transactions_between(start1, end1)
-    view.print_general_results([result], f'Transactions between {start} and {end}')
+    view.print_general_results([result], f'Contestants born between {start} and {end}')
     
 
 def sum_transactions_between():
-    start, end = view.get_inputs(BETWEEN[0:])
-    start1 = sales.convert_date(start)
-    end1 = sales.convert_date(end)
-    result = sales.sum_of_transactions_between(start1, end1)
-    view.print_general_results([result], f'Sum of transactions between {start} and {end}')
+    data = read_table_from_file("./model/sales/sales.csv")
+    weights = []
+    age = []
+    for people in data:
+        weights.append(people[3])
+        age.append(people[4][0:4])
+
+    alma.show_chart(age, weights)
     
 
 def run_operation(option):
@@ -85,14 +90,14 @@ def run_operation(option):
 
 def display_menu():
     options = ["Back to main menu",
-               "Add new movie",
-               "List movies",
-               "Update movie",
-               "Remove movie",
-               "Get the movie that made the biggest revenue",
-               "Get the product that made the biggest revenue altogether",
-               "Count number of movies between",
-               "Sum the price of movies between"]
+               "Add new contestant",
+               "List contestants",
+               "Update data",
+               "Remove contestant(s)",
+               "Get the heaviest contestant",
+               "Get the category that has the heaviest contestants altogether",
+               "Count contestants born movies between",
+               "Show weight:age diagram"]
     view.print_menu("Sales", options)
 
 
@@ -100,8 +105,6 @@ def menu():
     operation = None
     while operation != '0':
         display_menu()
-        view.print_message('\n')
-        view.print_message(sales.get_random_quote())
         view.print_message('\n')
         try:
             view.print_message('\n')

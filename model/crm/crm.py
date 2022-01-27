@@ -70,7 +70,3 @@ def subscribed_emails():
             subscribed.append(i[2])
     return subscribed
 
-
-def get_random_quote():
-    quote = util.generate_quote()
-    return quote

@@ -130,6 +130,4 @@ def sum_of_transactions_between(start, end):
     return sum_of_transactions
     
 
-def get_random_quote():
-    quote = util.generate_quote()
-    return quote
+

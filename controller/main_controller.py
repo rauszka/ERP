@@ -26,9 +26,6 @@ def display_menu():
 def menu():
     option = None
     while option != '0':
-        view.print_message('\n')
-        view.print_message("Welcome to the world of Quentin Tarantino!")
-        view.print_message('\n')
         display_menu()
         try:
             view.print_message('\n')

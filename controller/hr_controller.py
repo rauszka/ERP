@@ -105,8 +105,6 @@ def menu():
     while operation != '0':
         display_menu()
         view.print_message('\n')
-        view.print_message(hr.get_random_quote())
-        view.print_message('\n')
         try:
             view.print_message('\n')
             operation = view.get_input("Please select an operation: ")
